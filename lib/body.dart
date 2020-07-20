@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
@@ -33,7 +32,7 @@ class _BodyWidgetsState extends State<BodyWidgets> {
     Timer(Duration(seconds: 1), () {
       _btnController.success();
     });
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 4), () {
       _btnController.reset();
     });
   }
@@ -46,9 +45,9 @@ class _BodyWidgetsState extends State<BodyWidgets> {
         children: <Widget>[
           Container(
             child: WeatherWidget(
-              weather: 'sunny',
               size: Size.infinite,
-              sunConfig: SunConfig(),
+              weather: 'Thunder',
+              thunderConfig: ThunderConfig(),
             ),
           ),
           Container(
@@ -67,23 +66,24 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
                   controller: _btnController,
-                  onPressed: _doSomething,
+                  onPressed: () {
+                    _doSomething();
+                    getLocation();
+                  },
                 ),
-
-                /*FlatButton(
-                  padding: EdgeInsets.all(0),
-                  onPressed: null,
-                  child: Text(
-                    'UPDATE',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),*/
               ),
             ),
           ),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              'CITY NAME',
+              style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white),
+            ),
+          )
         ],
       ),
     );
