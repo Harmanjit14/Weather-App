@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
 import 'package:weather_widget/example/main.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 void getLocation() async {
   double longitude, latitude;
@@ -17,7 +20,24 @@ void getLocation() async {
   print("${first.subAdminArea}");
 }
 
-class BodyWidgets extends StatelessWidget {
+class BodyWidgets extends StatefulWidget {
+  @override
+  _BodyWidgetsState createState() => _BodyWidgetsState();
+}
+
+class _BodyWidgetsState extends State<BodyWidgets> {
+  final RoundedLoadingButtonController _btnController =
+      new RoundedLoadingButtonController();
+
+  void _doSomething() async {
+    Timer(Duration(seconds: 1), () {
+      _btnController.success();
+    });
+    Timer(Duration(seconds: 3), () {
+      _btnController.reset();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,13 +56,21 @@ class BodyWidgets extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                width: 100,
+                width: 120,
                 height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black),
                 alignment: Alignment.center,
-                child: FlatButton(
+                child: RoundedLoadingButton(
+                  color: Colors.black,
+                  child: Text('UPDATE',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                  controller: _btnController,
+                  onPressed: _doSomething,
+                ),
+
+                /*FlatButton(
                   padding: EdgeInsets.all(0),
                   onPressed: null,
                   child: Text(
@@ -52,7 +80,7 @@ class BodyWidgets extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                ),
+                ),*/
               ),
             ),
           ),
