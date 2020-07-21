@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:Weather_App/database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
@@ -7,7 +6,6 @@ import 'package:weather_widget/WeatherWidget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 void getLocation() async {
-  WeatherData obj;
   double longitude, latitude;
   Position position = await Geolocator()
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
@@ -17,8 +15,6 @@ void getLocation() async {
   var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
   var first = adress.first;
 
-  obj.setCoordinates(longitude, latitude);
-  obj.setLocation(first.subAdminArea);
 }
 
 class CloudyWid extends StatelessWidget {
