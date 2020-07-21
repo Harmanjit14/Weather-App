@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'package:Weather_App/database.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
-import 'package:weather_widget/example/main.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 void getLocation() async {
+  WeatherData obj;
   double longitude, latitude;
   Position position = await Geolocator()
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
@@ -15,8 +16,9 @@ void getLocation() async {
   final Coordinates loc = new Coordinates(latitude, longitude);
   var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
   var first = adress.first;
-  print(position);
-  print("${first.subAdminArea}");
+
+  obj.setCoordinates(longitude, latitude);
+  obj.setLocation(first.subAdminArea);
 }
 
 class BodyWidgets extends StatefulWidget {
@@ -27,7 +29,6 @@ class BodyWidgets extends StatefulWidget {
 class _BodyWidgetsState extends State<BodyWidgets> {
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
-
   void _doSomething() async {
     Timer(Duration(seconds: 1), () {
       _btnController.success();
@@ -45,9 +46,10 @@ class _BodyWidgetsState extends State<BodyWidgets> {
         children: <Widget>[
           Container(
             child: WeatherWidget(
+              weather: 'random',
               size: Size.infinite,
-              weather: 'Thunder',
-              thunderConfig: ThunderConfig(),
+              sunConfig: SunConfig(),
+              cloudConfig: CloudConfig(),
             ),
           ),
           Container(
@@ -69,6 +71,7 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                   onPressed: () {
                     _doSomething();
                     getLocation();
+                    Navigator.pushNamed(context, '/cloudy');
                   },
                 ),
               ),
