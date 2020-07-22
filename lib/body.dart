@@ -51,10 +51,9 @@ class _BodyWidgetsState extends State<BodyWidgets> {
         children: <Widget>[
           Container(
             child: WeatherWidget(
-              weather: 'random',
+              weather: 'Sunny',
               size: Size.infinite,
               sunConfig: SunConfig(),
-              cloudConfig: CloudConfig(),
             ),
           ),
           Container(
@@ -67,15 +66,15 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                 alignment: Alignment.center,
                 child: RoundedLoadingButton(
                   color: Colors.black,
-                  child: Text('UPDATE',
+                  child: Text('LOCATE',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
                   controller: _btnController,
-                  onPressed: () {
+                  onPressed: () async {
                     _doSomething();
-                    getCoordinates();
+                    await getCoordinates();
                     Navigator.pushNamed(context, '/cloudy');
                   },
                 ),
@@ -106,7 +105,7 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
