@@ -32,7 +32,6 @@ dependencies:
   geocoder: ^0.2.1
   weather_widget: ^1.0.5
   rounded_loading_button: ^1.0.11
-  weather: ^1.2.0
 
 dev_dependencies:
   flutter_test:

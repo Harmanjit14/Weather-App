@@ -5,16 +5,25 @@ import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-void getLocation() async {
+void getCoordinates() async {
   double longitude, latitude;
   Position position = await Geolocator()
       .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
   longitude = position.longitude;
   latitude = position.latitude;
+  getLocation(longitude, latitude);
+}
+
+void getLocation(double longitude, double latitude) async {
+  var city;
+  var state;
   final Coordinates loc = new Coordinates(latitude, longitude);
   var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
   var first = adress.first;
-
+  city = first.subAdminArea;
+  state = first.adminArea;
+  print(city);
+  print(state);
 }
 
 class CloudyWid extends StatelessWidget {
@@ -61,8 +70,8 @@ class CloudyWid extends StatelessWidget {
                     controller: _btnController,
                     onPressed: () {
                       _doSomething();
-                      getLocation();
-                      Navigator.pushNamed(context, '/cloudy');
+                      getCoordinates();
+                      Navigator.pushNamed(context, '/heavyRain');
                     },
                   ),
                 ),
