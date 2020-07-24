@@ -1,30 +1,31 @@
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
+//import 'package:Weather_App/database.dart';
+//import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
+//import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-void getCoordinates() async {
-  double longitude, latitude;
-  Position position = await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-  longitude = position.longitude;
-  latitude = position.latitude;
-  getLocation(longitude, latitude);
-}
+// void getCoordinates() async {
+//   double longitude, latitude;
+//   Position position = await Geolocator()
+//       .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+//   longitude = position.longitude;
+//   latitude = position.latitude;
+//   getLocation(longitude, latitude);
+// }
 
-void getLocation(double longitude, double latitude) async {
-  var city;
-  var state;
-  final Coordinates loc = new Coordinates(latitude, longitude);
-  var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
-  var first = adress.first;
-  city = first.subAdminArea;
-  state = first.adminArea;
-  print(city);
-  print(state);
-}
+// void getLocation(double longitude, double latitude) async {
+//   var city;
+//   var state;
+//   final Coordinates loc = new Coordinates(latitude, longitude);
+//   var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
+//   var first = adress.first;
+//   city = first.subAdminArea;
+//   state = first.adminArea;
+//   print(city);
+//   print(state);
+// }
 
 class CloudyWid extends StatelessWidget {
   final RoundedLoadingButtonController _btnController =
@@ -70,7 +71,6 @@ class CloudyWid extends StatelessWidget {
                     controller: _btnController,
                     onPressed: () {
                       _doSomething();
-                      getCoordinates();
                       Navigator.pushNamed(context, '/heavyRain');
                     },
                   ),

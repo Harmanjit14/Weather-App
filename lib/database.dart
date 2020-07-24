@@ -1,42 +1,65 @@
-// import 'package:geocoder/geocoder.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'dart:async';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'dart:async';
+import 'package:http/http.dart';
+import 'dart:convert';
 
-// class WeatherData {
-//   double longitude, latitude, temperature;
-//   var conditions;
-//   var city;
-//   var state;
+class WeatherData {
+  double longitude, latitude;
+  var conditions;
+  var city;
+  var state;
+  int id;
+  String data;
+  double temp, minTemp, maxTemp, feelTemp;
+  String weatherType, weatherDescription;
 
-//   WeatherData();
+  WeatherData();
 
-//   void setCoordinates(double long, double lat) {
-//     latitude = lat;
-//     longitude = long;
-//   }
+  double getTemp() {
+    return temp;
+  }
 
-//   void setLocation(var c, var s) {
-//     city = c;
-//     state = s;
-//   }
+  String getCity() {
+    return city;
+  }
 
-//   void setWeather(double temp, var condition) {
-//     temperature = temp;
-//     conditions = condition;
-//   }
+  String getState() {
+    return state;
+  }
 
-//   void getLocation() async {
-//     final Coordinates loc = new Coordinates(latitude, longitude);
-//     var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
-//     var first = adress.first;
-//     city = first.subAdminArea;
-//     state = first.adminArea;
-//   }
+  Future<void> getCoordinates() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+    longitude = position.longitude;
+    latitude = position.latitude;
+    await getLocation(longitude, latitude);
+  }
 
-//   void getCoordinates() async {
-//     Position position = await Geolocator()
-//         .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-//     longitude = position.longitude;
-//     latitude = position.latitude;
-//   }
-// }
+  Future<void> getLocation(double longitude, double latitude) async {
+    final Coordinates loc = new Coordinates(latitude, longitude);
+    var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
+    var first = adress.first;
+    city = first.subAdminArea;
+    state = first.adminArea;
+    getWeather();
+  }
+
+  Future<void> getWeather() async {
+    Response response = await get(
+        'https://samples.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=439d4b804bc8187953eb36d2a8c26a02');
+    if (response.statusCode == 200) {
+      data = response.body;
+      temp = jsonDecode(data)['main']['temp'];
+      id = jsonDecode(data)['weather'][0]['id'];
+      printData();
+    }
+  }
+
+  void printData() {
+    print(city);
+    print(state);
+    print(temp);
+    print(id);
+  }
+}

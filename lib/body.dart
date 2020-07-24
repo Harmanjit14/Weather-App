@@ -1,30 +1,8 @@
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
+import 'package:Weather_App/database.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-
-void getCoordinates() async {
-  double longitude, latitude;
-  Position position = await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-  longitude = position.longitude;
-  latitude = position.latitude;
-  getLocation(longitude, latitude);
-}
-
-void getLocation(double longitude, double latitude) async {
-  var city;
-  var state;
-  final Coordinates loc = new Coordinates(latitude, longitude);
-  var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
-  var first = adress.first;
-  city = first.subAdminArea;
-  state = first.adminArea;
-  print(city);
-  print(state);
-}
 
 class BodyWidgets extends StatefulWidget {
   @override
@@ -74,7 +52,8 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                   controller: _btnController,
                   onPressed: () async {
                     _doSomething();
-                    await getCoordinates();
+                    WeatherData obj = WeatherData();
+                    await obj.getCoordinates();
                     Navigator.pushNamed(context, '/cloudy');
                   },
                 ),
@@ -87,7 +66,7 @@ class _BodyWidgetsState extends State<BodyWidgets> {
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  'CITY',
+                  'WEATHER APP',
                   style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.w900,
@@ -97,7 +76,7 @@ class _BodyWidgetsState extends State<BodyWidgets> {
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  'STATE COUNTRY',
+                  'Press Locate to Start',
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w900,
@@ -105,6 +84,14 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                 ),
               ),
             ],
+          ),
+          Container(
+            margin: EdgeInsets.all(8),
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              'Made with ❤',
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
         ],
       ),
