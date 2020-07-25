@@ -13,10 +13,11 @@ class _BodyWidgetsState extends State<BodyWidgets> {
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
   void _doSomething() async {
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 3), () {
+      //Navigator.pushNamed(context, '/$x');
       _btnController.success();
     });
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 3), () {
       _btnController.reset();
     });
   }
@@ -50,11 +51,13 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
                   controller: _btnController,
-                  onPressed: () async {
-                    _doSomething();
+                  onPressed: () {
                     WeatherData obj = WeatherData();
-                    await obj.getCoordinates();
-                    Navigator.pushNamed(context, '/cloudy');
+                    obj.getCoordinates(context);
+                    _doSomething();
+
+                    //print(x);
+                    //Navigator.pushNamed(context, '/$x');
                   },
                 ),
               ),

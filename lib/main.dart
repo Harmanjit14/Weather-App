@@ -12,7 +12,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,12 +20,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => BodyPage(),
-        '/sunny': (context) => SunnyWid(),
-        '/cloudy': (context) => CloudyWid(),
-        '/lightRain': (context) => LightRainWid(),
-        '/heavyRain': (context) => HeavyRainWid(),
-        '/snow': (context) => SnowyWid(),
-        '/thunder': (context) => ThunderWid(),
+        '/0': (context) => SunnyWid(),
+        '/1': (context) => CloudyWid(),
+        '/2': (context) => LightRainWid(),
+        '/3': (context) => HeavyRainWid(),
+        '/4': (context) => SnowyWid(),
+        '/5': (context) => ThunderWid(),
       },
     );
   }
