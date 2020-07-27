@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:Weather_App/database.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_widget/WeatherWidget.dart';
@@ -10,6 +11,8 @@ class BodyWidgets extends StatefulWidget {
 }
 
 class _BodyWidgetsState extends State<BodyWidgets> {
+  
+
   final RoundedLoadingButtonController _btnController =
       new RoundedLoadingButtonController();
   void _doSomething() async {
@@ -53,11 +56,9 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                   controller: _btnController,
                   onPressed: () {
                     WeatherData obj = WeatherData();
+                    obj.setObject(obj);
                     obj.getCoordinates(context);
                     _doSomething();
-
-                    //print(x);
-                    //Navigator.pushNamed(context, '/$x');
                   },
                 ),
               ),

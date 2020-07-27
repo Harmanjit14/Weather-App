@@ -21,8 +21,13 @@ class WeatherData {
   String data;
   double temp, minTemp, maxTemp, feelTemp;
   var weatherType, weatherDescription;
+  WeatherData obj;
 
   WeatherData();
+
+  void setObject(WeatherData x) {
+    obj = x;
+  }
 
   double getTemp() {
     return temp;
@@ -81,39 +86,49 @@ class WeatherData {
         );
       } else if (id >= 300 && id <= 500) {
         pane = 2;
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => LightRainWid()),
         );
       } else if (id >= 501 && id <= 531) {
         pane = 3;
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => HeavyRainWid()),
         );
       } else if (id >= 600 && id <= 622) {
         pane = 4;
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => SnowyWid()),
         );
       } else if (id == 701 || id == 741) {
         pane = 4;
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => SnowyWid()),
         );
       } else if ((id >= 711 && id <= 731) || (id >= 751 && id <= 771)) {
         pane = 0;
+
         Navigator.push(
           context,
-          new MaterialPageRoute(builder: (context) => SunnyWid()),
+          new MaterialPageRoute(
+              builder: (context) => SunnyWid(city, state, temp, minTemp,
+                  maxTemp, weatherType, weatherDescription)),
         );
       } else if (id == 800) {
         pane = 0;
         Navigator.push(
           context,
-          new MaterialPageRoute(builder: (context) => SunnyWid()),
+          new MaterialPageRoute(
+            builder: (context) => SunnyWid(city, state, temp, minTemp, maxTemp,
+                weatherType, weatherDescription),
+          ),
         );
       } else if (id >= 801 && id <= 804) {
         pane = 1;
@@ -125,7 +140,9 @@ class WeatherData {
         pane = 0;
         Navigator.push(
           context,
-          new MaterialPageRoute(builder: (context) => SunnyWid()),
+          new MaterialPageRoute(
+              builder: (context) => SunnyWid(city, state, temp, minTemp,
+                  maxTemp, weatherType, weatherDescription)),
         );
       }
     }

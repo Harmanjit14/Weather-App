@@ -1,30 +1,31 @@
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:weather_widget/WeatherWidget.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-void getCoordinates() async {
-  double longitude, latitude;
-  Position position = await Geolocator()
-      .getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-  longitude = position.longitude;
-  latitude = position.latitude;
-  getLocation(longitude, latitude);
+/*class SunnyWid extends StatefulWidget {
+  
+
+  @override
+  _SunnyWidState createState() => _SunnyWidState();
 }
 
-void getLocation(double longitude, double latitude) async {
-  var city;
-  var state;
-  final Coordinates loc = new Coordinates(latitude, longitude);
-  var adress = await Geocoder.local.findAddressesFromCoordinates(loc);
-  var first = adress.first;
-  city = first.subAdminArea;
-  state = first.adminArea;
-  print(city);
-  print(state);
-}
+class _SunnyWidState extends State<SunnyWid> {
+  _SunnyWidState();
+
+  @override
+  void initState() {
+    print(widget.city);
+    
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}*/
 
 class SunnyWid extends StatelessWidget {
   final RoundedLoadingButtonController _btnController =
@@ -36,6 +37,22 @@ class SunnyWid extends StatelessWidget {
     Timer(Duration(seconds: 4), () {
       _btnController.reset();
     });
+  }
+
+  var conditions;
+  var city;
+  var stateW;
+  double temp, minTemp, maxTemp, feelTemp;
+  var weatherType, weatherDescription;
+  SunnyWid(
+      var city, var stateW, var temp, var minT, var maxT, var type, var descp) {
+    this.city = city;
+    this.stateW = stateW;
+    this.temp = temp;
+    minTemp = minT;
+    maxTemp = maxT;
+    weatherType = type;
+    weatherDescription = descp;
   }
 
   @override
@@ -70,8 +87,6 @@ class SunnyWid extends StatelessWidget {
                     controller: _btnController,
                     onPressed: () {
                       _doSomething();
-                      getCoordinates();
-                      Navigator.pushNamed(context, '/thunder');
                     },
                   ),
                 ),
@@ -88,7 +103,7 @@ class SunnyWid extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           child: Text(
-                            '32 c',
+                            '${temp.toInt()}',
                             style: TextStyle(
                               fontSize: 50,
                               fontWeight: FontWeight.w900,
@@ -112,7 +127,7 @@ class SunnyWid extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                '20',
+                                '${minTemp.toInt()}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -136,7 +151,7 @@ class SunnyWid extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                '38',
+                                '${maxTemp.toInt()}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -157,22 +172,26 @@ class SunnyWid extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            'CITY',
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white),
+                          child: Expanded(
+                            child: Text(
+                              '$city',
+                              style: TextStyle(
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                         Container(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            'STATE COUNTRY',
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white),
+                          child: Expanded(
+                            child: Text(
+                              '$stateW',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                       ],
