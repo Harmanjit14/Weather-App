@@ -61,7 +61,7 @@ class WeatherData {
 
   void getWeather(BuildContext context) async {
     Response response = await get(
-        'https://samples.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=439d4b804bc8187953eb36d2a8c26a02');
+        'https://samples.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=4b67fe820e4a5922bf6bc9c0de177939');
     if (response.statusCode == 200) {
       data = response.body;
       temp = jsonDecode(data)['main']['temp'] - 273.15;
@@ -73,6 +73,7 @@ class WeatherData {
     } else {
       id = 0;
     }
+    printData();
     weatherScreen(context);
   }
 

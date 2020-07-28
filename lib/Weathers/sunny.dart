@@ -70,134 +70,98 @@ class SunnyWid extends StatelessWidget {
               ),
             ),
             Container(
+              alignment: Alignment.center,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${temp.toInt()}°c',
+                        style: TextStyle(
+                            fontSize: 65,
+                            color: Colors.yellow[900],
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Min ',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            '${minTemp.toInt()}°c',
+                            style: TextStyle(
+                                fontSize: 35,
+                                color: Colors.yellow[900],
+                                fontWeight: FontWeight.w900),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'Max ',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.yellow,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Text(
+                            '${maxTemp.toInt()}°c',
+                            style: TextStyle(
+                                fontSize: 35,
+                                color: Colors.yellow[900],
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                width: 300,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Color(0xffb2f2519).withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.8),
+                      spreadRadius: 1,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                      // changes position of shadow
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   width: 120,
-                  height: 50,
-                  alignment: Alignment.center,
                   child: RoundedLoadingButton(
                     color: Colors.black,
                     child: Text('UPDATE',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
-                            fontWeight: FontWeight.bold)),
+                            fontWeight: FontWeight.bold),),
                     controller: _btnController,
                     onPressed: () {
                       _doSomething();
                     },
                   ),
                 ),
-              ),
-            ),
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            '${temp.toInt()}',
-                            style: TextStyle(
-                              fontSize: 50,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                'MIN',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              child: Text(
-                                '${minTemp.toInt()}',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Container(
-                              child: Text(
-                                'MAX',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              child: Text(
-                                '${maxTemp.toInt()}',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 200,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Expanded(
-                            child: Text(
-                              '$city',
-                              style: TextStyle(
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Expanded(
-                            child: Text(
-                              '$stateW',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

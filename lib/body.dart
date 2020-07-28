@@ -56,7 +56,6 @@ class _BodyWidgetsState extends State<BodyWidgets> {
                   controller: _btnController,
                   onPressed: () {
                     WeatherData obj = WeatherData();
-                    obj.setObject(obj);
                     obj.getCoordinates(context);
                     _doSomething();
                   },
