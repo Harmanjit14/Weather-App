@@ -33,6 +33,7 @@ dependencies:
   weather_widget: ^1.0.5
   rounded_loading_button: ^1.0.11
   http: ^0.12.2
+  font_awesome_flutter: ^8.8.1
 
 dev_dependencies:
   flutter_test:

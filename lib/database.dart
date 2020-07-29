@@ -17,10 +17,10 @@ class WeatherData {
   var conditions;
   var city;
   var state;
-  int id, pane;
-  String data;
-  double temp, minTemp, maxTemp, feelTemp;
-  var weatherType, weatherDescription;
+  var id, pane;
+  var data;
+  var temp;
+  var weatherType;
   WeatherData obj;
 
   WeatherData();
@@ -61,19 +61,13 @@ class WeatherData {
 
   void getWeather(BuildContext context) async {
     Response response = await get(
-        'https://samples.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=4b67fe820e4a5922bf6bc9c0de177939');
-    if (response.statusCode == 200) {
-      data = response.body;
-      temp = jsonDecode(data)['main']['temp'] - 273.15;
-      maxTemp = jsonDecode(data)['main']['temp_max'] - 273.15;
-      minTemp = jsonDecode(data)['main']['temp_min'] - 273.15;
-      id = jsonDecode(data)['weather'][0]['id'];
-      weatherType = jsonDecode(data)['weather'][0]['main'];
-      weatherDescription = jsonDecode(data)['weather'][0]['description'];
-    } else {
-      id = 0;
-    }
-    printData();
+        'http://api.weatherstack.com/current?access_key=ccabaee17421932979d25564ff21f943&query=$city');
+
+    data = response.body;
+    temp = jsonDecode(data)['current']['temperature'];
+    id = jsonDecode(data)['current']['weather_code'];
+    weatherType = jsonDecode(data)['weather_descriptions'];
+
     weatherScreen(context);
   }
 
@@ -113,22 +107,28 @@ class WeatherData {
           context,
           new MaterialPageRoute(builder: (context) => SnowyWid()),
         );
-      } else if ((id >= 711 && id <= 731) || (id >= 751 && id <= 771)) {
+      } else if ((id >= 711 && id <= 731) ||
+          (id >= 751 && id <= 771) ||
+          id == 143) {
         pane = 0;
 
         Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => SunnyWid(city, state, temp, minTemp,
-                  maxTemp, weatherType, weatherDescription)),
+            builder: (context) => SunnyWid(city, state, temp, weatherType),
+          ),
         );
       } else if (id == 800) {
         pane = 0;
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => SunnyWid(city, state, temp, minTemp, maxTemp,
-                weatherType, weatherDescription),
+            builder: (context) => SunnyWid(
+              city,
+              state,
+              temp,
+              weatherType,
+            ),
           ),
         );
       } else if (id >= 801 && id <= 804) {
@@ -142,22 +142,20 @@ class WeatherData {
         Navigator.push(
           context,
           new MaterialPageRoute(
-              builder: (context) => SunnyWid(city, state, temp, minTemp,
-                  maxTemp, weatherType, weatherDescription)),
+            builder: (context) => SunnyWid(city, state, temp, weatherType),
+          ),
         );
       }
     }
   }
 
   void printData() {
+    print(latitude);
+    print(longitude);
     print(city);
     print(state);
     print(temp);
     print(id);
-    print(maxTemp);
-    print(minTemp);
     print(weatherType);
-    print(weatherDescription);
-    print(pane);
   }
 }
